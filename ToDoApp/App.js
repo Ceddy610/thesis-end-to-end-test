@@ -13,7 +13,7 @@ const theme = {
 
 export default function App() {
   return (
-    <PaperProvider theme={theme}>
+    <PaperProvider>
       <SafeAreaView style={styles.container}>
         <ButtonNavigationBar />
       </SafeAreaView>
