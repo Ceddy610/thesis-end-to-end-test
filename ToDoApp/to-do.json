@@ -1,0 +1,27 @@
+[
+    {
+        "completed": false,
+        "name": "Some-todo-1",
+        "description": "Some description"
+    },
+    {
+        "completed": true,
+        "name": "Some-todo-2",
+        "description": "Some description"
+    },
+    {
+        "completed": false,
+        "name": "Some-todo-3",
+        "description": "Some description"
+    },
+    {
+        "completed": true,
+        "name": "Some-todo-4",
+        "description": "Some description"
+    },
+    {
+        "completed": false,
+        "name": "Some-todo-5",
+        "description": "Some description"
+    }
+]

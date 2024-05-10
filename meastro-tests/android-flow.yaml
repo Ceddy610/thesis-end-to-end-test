@@ -1,0 +1,17 @@
+appId: com.example.todoappflutter
+---
+- launchApp
+- tapOn:
+    label: "Check first todo"
+    text: "Some-todo-1.*"
+- swipe:
+    start: "75%,10%"
+    end: "31%,10%"
+    duration: 479
+- tapOn: "Add a task"
+- tapOn: "Task"
+- inputText: "Task 1"
+- tapOn: "Description"
+- inputText: "Description 1"
+- tapOn: "Add"
+- assertVisible: "Task 1.*"

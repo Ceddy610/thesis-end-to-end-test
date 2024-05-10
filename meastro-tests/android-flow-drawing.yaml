@@ -1,0 +1,39 @@
+appId: com.example.todoappflutter
+---
+- launchApp
+- tapOn:
+    label: "Go to drawing page"
+    text: "Drawing.*"
+- swipe:
+    start: "10%,13%"
+    end: "60%,33%"
+    duration: 10
+- swipe:
+    start: "40%,59%"
+    end: "77%,70%"
+    duration: 10
+- swipe:
+    start: "39%,59%"
+    end: "7%,73%"
+    duration: 10
+- swipe:
+    start: "15%,44%"
+    end: "65%,45%"
+    duration: 10
+- swipe:
+    start: "14%,34%"
+    end: "70%,17%"
+    duration: 10
+- swipe:
+    start: "40%,18%"
+    end: "39%,59%"
+    duration: 10
+- takeScreenshot: DrawingPageActual
+- runScript:
+    label: "Compare Images"
+    file: scripts/exec.js
+    env:
+      command: 'sh ../image-compare.sh'
+- assertTrue:
+    label: "Images are similar"
+    condition: ${output.exec.exitCode === 0}
