@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, TextInput } from "react-native";
-import { Button, List, Checkbox, useTheme, Dialog } from "react-native-paper";
+import { Button, List, Checkbox, useTheme, Dialog, IconButton } from "react-native-paper";
 import CustomData from "../../to-do.json";
+import { useDialogStore } from "../state/DialogState";
+import { SwipeListView } from "react-native-swipe-list-view";
 
 const ToDoListItem = ({ title, description, completed }) => {
   const theme = useTheme();
@@ -12,9 +14,11 @@ const ToDoListItem = ({ title, description, completed }) => {
   };
   return (
     <List.Item
+      style={{ backgroundColor: theme.colors.surface }}
       key={title}
       title={title}
       description={description}
+      onPress={handleToggle}
       right={(props) => (
         <Checkbox
           {...props}
@@ -27,37 +31,11 @@ const ToDoListItem = ({ title, description, completed }) => {
   );
 };
 
-const ToDoDialog = ({ onDismiss }) => {
-  return (
-    <Dialog visible={false} onDismiss={onDismiss}>
-      <Dialog.Title>Add a new task</Dialog.Title>
-      <Dialog.Content>
-        <TextInput label="Task name" onChangeText={setTaskName} />
-        <TextInput label="Task description" onChangeText={setTaskDescription} />
-      </Dialog.Content>
-      <Dialog.Actions>
-        <Button onPress={onDismiss}>Cancel</Button>
-        <Button onPress={() => console.log("Nice")}>Confirm</Button>
-      </Dialog.Actions>
-    </Dialog>
-  );
-};
-
 const ToDoList = () => {
   const theme = useTheme();
-  const [dialogVisible, setDialogVisible] = useState(false);
-
-  const toDoListItems = CustomData.map((item) => {
-    return (
-      <ToDoListItem
-        styles={styles.button}
-        key={item.name}
-        title={item.name}
-        description={item.description}
-        isCompleted={item.completed}
-      />
-    );
-  });
+  const setShowDialog = useDialogStore((state) => state.setShowDialog);
+  const toDoList = useDialogStore((state) => state.toDoList);
+  const deleteToDo = useDialogStore((state) => state.deleteToDo);
 
   return (
     <View
@@ -66,7 +44,35 @@ const ToDoList = () => {
         backgroundColor: theme.colors.background,
       }}
     >
-      <List.Section style={styles.list}>{toDoListItems}</List.Section>
+      <SwipeListView
+        style={styles.list}
+        data={toDoList}
+        renderItem={({ item }) => {
+          return (
+            <ToDoListItem
+              key={item.name}
+              title={item.name}
+              description={item.description}
+              isCompleted={item.completed}
+            />
+          );
+        }}
+        renderHiddenItem={(data, rowMap) => {
+          return (
+            <View style={{...styles.hiddenElement, backgroundColor: 'red', height: 'auto'}}>
+              <IconButton
+                icon="delete"
+                iconColor="white"
+                onPress={() => {
+                  deleteToDo(data.item);
+                }}
+              >
+              </IconButton>
+            </View>
+          );
+        }}
+        rightOpenValue={-75}
+      />
       <View style={styles.button}>
         <Button
           style={{
@@ -75,7 +81,7 @@ const ToDoList = () => {
           }}
           icon="plus"
           mode="contained"
-          onPress={() => setDialogVisible(true)}
+          onPress={setShowDialog}
         >
           Add a new task
         </Button>
@@ -100,6 +106,12 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     margin: 16,
   },
+  hiddenElement: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+  }
 });
 
 export default ToDoList;
