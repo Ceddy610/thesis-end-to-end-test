@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, View, TextInput } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { StyleSheet, View, TextInput, Dimensions, Animated } from "react-native";
 import { Button, List, Checkbox, useTheme, Dialog, IconButton } from "react-native-paper";
 import CustomData from "../../to-do.json";
 import { useDialogStore } from "../state/DialogState";
@@ -13,6 +13,7 @@ const ToDoListItem = ({ title, description, completed }) => {
     setIsCompleted(!isCompleted);
   };
   return (
+    <Animated.View>
     <List.Item
       style={{ backgroundColor: theme.colors.surface }}
       key={title}
@@ -28,14 +29,43 @@ const ToDoListItem = ({ title, description, completed }) => {
         />
       )}
     />
+    </Animated.View>
   );
 };
+
+const rowTranslateAnimatedValues = {};
+Array(20)
+    .fill('')
+    .forEach((_, i) => {
+        rowTranslateAnimatedValues[`${i}`] = new Animated.Value(1);
+    });
 
 const ToDoList = () => {
   const theme = useTheme();
   const setShowDialog = useDialogStore((state) => state.setShowDialog);
   const toDoList = useDialogStore((state) => state.toDoList);
   const deleteToDo = useDialogStore((state) => state.deleteToDo);
+
+  const animationIsRunning = useRef(false);
+
+  const onSwipeValueChange = swipeData => {
+    const { key, value } = swipeData;
+    console.log(swipeData);
+    if (
+        value < (-Dimensions.get('window').width) &&
+        !animationIsRunning.current
+    ) {
+        animationIsRunning.current = true;
+        Animated.timing(new Animated.Value(1), {
+            toValue: 0,
+            duration: 2,
+            useNativeDriver: false,
+        }).start(() => {
+            deleteToDo({ name: key })
+            animationIsRunning.current = false;
+        });
+    }
+};
 
   return (
     <View
@@ -47,6 +77,7 @@ const ToDoList = () => {
       <SwipeListView
         style={styles.list}
         data={toDoList}
+        keyExtractor={(item) => item.name}
         renderItem={({ item }) => {
           return (
             <ToDoListItem
@@ -57,21 +88,20 @@ const ToDoList = () => {
             />
           );
         }}
-        renderHiddenItem={(data, rowMap) => {
+        renderHiddenItem={(data) => {
           return (
             <View style={{...styles.hiddenElement, backgroundColor: 'red', height: 'auto'}}>
               <IconButton
                 icon="delete"
                 iconColor="white"
-                onPress={() => {
-                  deleteToDo(data.item);
-                }}
               >
               </IconButton>
             </View>
           );
         }}
-        rightOpenValue={-75}
+        rightOpenValue={-Dimensions.get('window').width}
+        onSwipeValueChange={onSwipeValueChange}
+        useNativeDriver={false}
       />
       <View style={styles.button}>
         <Button
@@ -92,7 +122,7 @@ const ToDoList = () => {
 
 const styles = StyleSheet.create({
   list: {
-    padding: 16,
+    margin: 16,
   },
   container: {
     flex: 1,

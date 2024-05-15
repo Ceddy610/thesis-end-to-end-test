@@ -1,9 +1,6 @@
-import { useEffect } from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import { MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
 import ButtonNavigationBar from './app/navigation/ButtonNavigationBar';
-import ToDoDialog from './app/components/ToDoDialog';
-import { useDialogStore } from './app/state/DialogState';
 
 
 const theme = {

@@ -4,6 +4,7 @@ import ToDoList from "../components/ToDoList";
 import { View } from "react-native";
 import ToDoDialog from "../components/ToDoDialog";
 import { useDialogStore } from "../state/DialogState";
+import Drawing from "../components/Drawing";
 
 const ToDoRoute = () => {
   const { showDialog, setShowDialog } = useDialogStore();
@@ -16,16 +17,16 @@ const ToDoRoute = () => {
   )
 };
 
-const AlbumsRoute = () => <Text>Albums</Text>;
+const AlbumsRoute = () => <Drawing />;
 
-export default NavigationBar = () => {
+export default () => {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     {
       key: "todo",
       title: "Home",
-      focusedIcon: "heart",
-      unfocusedIcon: "heart-outline",
+      focusedIcon: "home",
+      unfocusedIcon: "home",
     },
     { key: "drawing", title: "Drawing", focusedIcon: "draw" },
   ]);

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Dialog, Portal, TextInput } from "react-native-paper";
 import { useDialogStore } from "../state/DialogState";
 
-export default function ToDoDialog({ visible, onDismiss, onTaskAdded }) {
+export default function ToDoDialog({ visible, onDismiss }) {
     const [taskName, setTaskName] = useState('');
     const [taskDescription, setTaskDescription] = useState('');
     const setToDoInList = useDialogStore((state) => state.setToDoInList);
