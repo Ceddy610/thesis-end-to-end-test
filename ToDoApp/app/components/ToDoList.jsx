@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
-import { StyleSheet, View, TextInput, Dimensions, Animated } from "react-native";
-import { Button, List, Checkbox, useTheme, Dialog, IconButton } from "react-native-paper";
-import CustomData from "../../to-do.json";
+import React, { useState, useRef } from "react";
+import { StyleSheet, View, Dimensions, Animated } from "react-native";
+import { Button, List, Checkbox, useTheme, IconButton } from "react-native-paper";
 import { useDialogStore } from "../state/DialogState";
 import { SwipeListView } from "react-native-swipe-list-view";
 

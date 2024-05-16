@@ -34,6 +34,7 @@ appId: com.example.todoappflutter
     file: scripts/exec.js
     env:
       command: 'sh ../image-compare.sh'
+- evalScript: ${console.log(output.exec.stdout)}
 - assertTrue:
     label: "Images are similar"
     condition: ${output.exec.exitCode === 0}
