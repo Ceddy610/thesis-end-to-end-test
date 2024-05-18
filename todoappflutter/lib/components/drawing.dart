@@ -114,7 +114,6 @@ class _DrawingWidgetState extends State<DrawingWidget> {
       backgroundColor: Colors.yellow[50],
       body: Stack(
         children: [
-          buildToolbar(),
           buildAllPaths(context),
           buildCurrentPath(context),
         ],

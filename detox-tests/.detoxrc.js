@@ -13,6 +13,7 @@ module.exports = {
     'android.flutter': {
       type: 'android.apk',
       binaryPath: '../todoappflutter/build/app/outputs/flutter-apk/app-release.apk',
+      testBinaryPath: '../todoappflutter/build/app/outputs/flutter-apk/app-release.apk',
     }
   },
   devices: {
@@ -31,7 +32,7 @@ module.exports = {
     emulator: {
       type: 'android.emulator',
       device: {
-        avdName: 'Pixel_3a_API_30_x86'
+        avdName: 'Pixel_3a_API_33_arm64-v8a'
       }
     }
   },
@@ -56,9 +57,9 @@ module.exports = {
       device: 'emulator',
       app: 'android.debug'
     },
-    'android.emu.release': {
+    'android.emu.flutter': {
       device: 'emulator',
-      app: 'android.release'
+      app: 'android.flutter'
     }
   }
 };

@@ -16,15 +16,11 @@ app.listen(port, host, () => {
 app.post('/exec', (req, res) => {
   const args = req.body.args;
   if (!isStringArray(args)) {
-    console.error(`[${new Date()}]: Invalid args: ${req.body.args}`);
-
     res.status(400).send({
       error: 'invalid args',
     });
     return;
   }
-
-  console.log(`[${new Date()}]: Exec: ${args.join(', ')}`);
 
   const proc = process.spawn(args[0], args.slice(1), {
     shell: true,
@@ -37,7 +33,6 @@ app.post('/exec', (req, res) => {
   proc.stderr.on('data', (data) => stderr.push(data));
 
   proc.on('error', (err) => {
-    console.error(`[${new Date()}]: Failed to spawn: ${err}`);
     res.status(500).send({
       exitCode: 127,
       stdout: '',

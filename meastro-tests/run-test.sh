@@ -1,5 +1,5 @@
 cd server; 
-npm run start & server_pid=$!;
+npm run start & 
 cd ..;
 maestro test android-flow.yaml;
 maestro test android-flow-drawing.yaml;

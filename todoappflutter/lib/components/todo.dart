@@ -102,13 +102,13 @@ class _ToDoListState extends State<ToDoList> {
                                     TextField(
                                       controller: taskNameController,
                                       decoration: const InputDecoration(
-                                          labelText: 'Task',
+                                          label: Text('Task'),
                                           hintText: 'e.g. Buy milk'),
                                     ),
                                     TextField(
                                       controller: descriptionController,
                                       decoration: const InputDecoration(
-                                          labelText: 'Description',
+                                          label: Text('Description'),
                                           hintText: 'e.g. 1L of whole milk'),
                                     ),
                                   ])),

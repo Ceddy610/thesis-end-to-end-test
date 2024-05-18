@@ -49,7 +49,6 @@ const ToDoList = () => {
 
   const onSwipeValueChange = swipeData => {
     const { key, value } = swipeData;
-    console.log(swipeData);
     if (
         value < (-Dimensions.get('window').width) &&
         !animationIsRunning.current
