@@ -1,2 +1,2 @@
 include:
-  - local: ./ToDoApp/file.yml
+  - local: ToDoApp/.gitlab-ci.yml
