@@ -1,0 +1,26 @@
+image: ghcr.io/cirruslabs/flutter
+stages:
+  - lints
+  - tests
+  - build
+  - deploy
+before_script:
+  - cd todoappflutter
+lints:
+  stage: lints
+  script:
+    - flutter analyze
+  tags:
+    - flutter
+android:
+  stage: build
+  script:
+    - flutter build apk --release --build-number ${CI_JOB_ID:0:8}
+    - flutter build appbundle --release --build-number ${CI_JOB_ID:0:8}
+    - sudo bundle install
+    - cd android && bundle exec fastlane move_files
+  artifacts:
+    paths:
+      - build/artifacts/
+  tags:
+    - flutter

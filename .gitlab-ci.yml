@@ -1,2 +1,3 @@
 include:
   - local: ToDoApp/.gitlab-ci.yml
+  - local: todoappflutter/.gitlab-ci.yml
