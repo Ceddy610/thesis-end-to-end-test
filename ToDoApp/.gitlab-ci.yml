@@ -11,7 +11,8 @@ stages:
   - build
 
 before_script:
-  - npm install --cache .npm
+  - cd ToDoApp
+  - npm ci --cache .npm
   # or with yarn:
   #- yarn install --cache-folder .yarn
 
