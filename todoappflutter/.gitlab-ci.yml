@@ -5,17 +5,13 @@ lints:
   stage: lints
   script:
     - flutter analyze
-  tags:
-    - flutter
 android:
   image: ghcr.io/cirruslabs/flutter
   before_script:
     - cd todoappflutter
-  stage: build
+  stage: build-flutter
   script:
     - flutter build apk --release --build-number ${CI_JOB_ID:0:8}
   artifacts:
     paths:
       - build/artifacts/
-  tags:
-    - flutter
