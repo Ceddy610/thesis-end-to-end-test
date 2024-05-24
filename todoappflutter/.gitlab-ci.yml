@@ -10,8 +10,6 @@ lints:
   stage: lints
   script:
     - flutter analyze
-  tags:
-    - flutter
 android:
   stage: build-flutter
   script:
@@ -19,5 +17,3 @@ android:
   artifacts:
     paths:
       - build/artifacts/
-  tags:
-    - flutter
