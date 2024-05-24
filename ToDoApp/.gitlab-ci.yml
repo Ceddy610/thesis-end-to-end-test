@@ -11,7 +11,7 @@ stages:
   - build
 
 before_script:
-  - npm ci --cache .npm
+  - npm install --cache .npm
   # or with yarn:
   #- yarn install --cache-folder .yarn
 
