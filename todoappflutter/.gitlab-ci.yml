@@ -14,4 +14,4 @@ android:
     - flutter build apk --release --build-number ${CI_JOB_ID:0:8}
   artifacts:
     paths:
-      - build/app/outputs/flutter-apk/app-release.apk
+      - todoappflutter/build/app/outputs/flutter-apk/app-release.apk

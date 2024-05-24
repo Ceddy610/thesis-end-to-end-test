@@ -18,7 +18,6 @@ export default () => {
         newPath[currentIndex] = {
           segments: [`M ${Math.round(e.x)} ${Math.round(e.y)}`],
         };
-        console.log("newPath", newPath);
         return newPath;
       });
     })

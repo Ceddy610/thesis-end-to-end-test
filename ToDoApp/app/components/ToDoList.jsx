@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { StyleSheet, View, Dimensions, Animated } from "react-native";
-import { Button, List, Checkbox, useTheme, IconButton } from "react-native-paper";
+import { List, Checkbox, useTheme, IconButton, FAB } from "react-native-paper";
 import { useDialogStore } from "../state/DialogState";
 import { SwipeListView } from "react-native-swipe-list-view";
 
@@ -95,17 +95,12 @@ const ToDoList = () => {
         useNativeDriver={false}
       />
       <View style={styles.button}>
-        <Button
-          style={{
-            backgroundColor: theme.colors.primary,
-            width: "fit-content",
-          }}
+        <FAB
+          label="Add a task"
+          mode="evlevated"
           icon="plus"
-          mode="contained"
           onPress={setShowDialog}
-        >
-          Add a task
-        </Button>
+        />
       </View>
     </View>
   );
