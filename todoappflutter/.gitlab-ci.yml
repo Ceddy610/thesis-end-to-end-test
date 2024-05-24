@@ -1,14 +1,21 @@
-image: ghcr.io/cirruslabs/flutter
-before_script:
-  - cd todoappflutter
 lints:
+  image: ghcr.io/cirruslabs/flutter
+  before_script:
+    - cd todoappflutter
   stage: lints
   script:
     - flutter analyze
+  tags:
+    - flutter
 android:
-  stage: build-flutter
+  image: ghcr.io/cirruslabs/flutter
+  before_script:
+    - cd todoappflutter
+  stage: build
   script:
     - flutter build apk --release --build-number ${CI_JOB_ID:0:8}
   artifacts:
     paths:
       - build/artifacts/
+  tags:
+    - flutter
