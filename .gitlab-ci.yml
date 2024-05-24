@@ -1,3 +1,7 @@
+stages:
+  - lints
+  - build-flutter
+  - build-expo
 include:
   - local: ToDoApp/.gitlab-ci.yml
   - local: todoappflutter/.gitlab-ci.yml
