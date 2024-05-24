@@ -1,4 +1,4 @@
-appId: com.example.todoappflutter
+appId: ${APP_ID}
 ---
 - launchApp
 - tapOn:

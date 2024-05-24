@@ -50,10 +50,10 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return Scaffold(
       bottomNavigationBar: NavigationBar(
-          labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+          labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
           destinations: const <Widget>[
             NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-            NavigationDestination(icon: Icon(Icons.edit_square), label: 'Drawing'),
+            NavigationDestination(icon: Icon(Icons.draw), label: 'Drawing'),
           ],
           selectedIndex: currentIndex,
           onDestinationSelected: (int index) {

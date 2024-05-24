@@ -32,13 +32,6 @@ const ToDoListItem = ({ title, description, completed }) => {
   );
 };
 
-const rowTranslateAnimatedValues = {};
-Array(20)
-    .fill('')
-    .forEach((_, i) => {
-        rowTranslateAnimatedValues[`${i}`] = new Animated.Value(1);
-    });
-
 const ToDoList = () => {
   const theme = useTheme();
   const setShowDialog = useDialogStore((state) => state.setShowDialog);
@@ -86,7 +79,7 @@ const ToDoList = () => {
             />
           );
         }}
-        renderHiddenItem={(data) => {
+        renderHiddenItem={() => {
           return (
             <View style={{...styles.hiddenElement, backgroundColor: 'red', height: 'auto'}}>
               <IconButton
@@ -111,7 +104,7 @@ const ToDoList = () => {
           mode="contained"
           onPress={setShowDialog}
         >
-          Add a new task
+          Add a task
         </Button>
       </View>
     </View>

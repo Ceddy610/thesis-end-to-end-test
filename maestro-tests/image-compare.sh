@@ -7,7 +7,7 @@ if [ ! -f "$FILE" ]; then
     exit 1
 fi
 
-diff=`compare -metric AE ../drawingpageexpected.png $FILE difference.png 2>&1`
+diff=`compare -metric AE ../drawingpageexpected.png $FILE ../difference.png 2>&1`
 
 echo "Difference between images is $diff."
 

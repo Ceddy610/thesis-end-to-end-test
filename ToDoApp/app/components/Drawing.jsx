@@ -9,29 +9,31 @@ import { Canvas, Path } from "@shopify/react-native-skia";
 
 export default () => {
   const [paths, setPath] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const pan = Gesture.Pan()
     .onStart((e) => {
       setPath(() => {
         const newPath = [...paths];
-        newPath[paths.length] = {
+        newPath[currentIndex] = {
           segments: [`M ${Math.round(e.x)} ${Math.round(e.y)}`],
         };
+        console.log("newPath", newPath);
         return newPath;
       });
     })
     .onUpdate((e) => {
+      if (!paths[currentIndex]) return;
       setPath(() => {
         const newPath = [...paths];
-        newPath[paths.length - 1]?.segments?.push(
+        newPath[currentIndex]?.segments?.push(
           `L ${Math.round(e.x)} ${Math.round(e.y)}`
         );
         return newPath;
       });
     })
-    .onTouchesUp((g) => {
-      const newPaths = [...paths];
-      setPath(newPaths);
+    .onEnd(() => {
+      setCurrentIndex(currentIndex + 1);
     })
     .minDistance(1);
 
