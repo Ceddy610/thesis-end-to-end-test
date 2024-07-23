@@ -17,16 +17,16 @@ platform applications in the context of a migration
 To run the tests you need to run an Android Emulator and have both applications installed.
 You can build both applications from scratch by using the corresponding CLIs.
 
-- Flutter
-  - Install the Flutter SDK https://docs.flutter.dev/get-started/install
-  - Go into the project `todoappflutter` via the console and run `flutter build apk`
-  - Install the created APK into your Android Emulator
-- React Native
-  - Have `node` installed
-  - Go into the project `ToDoApp` via the console and run `npm install`
-  - After that you need to run `npx eas build -p android -e preview`
-    - This command asks you to create an account on the Expo website. You'll need this to build the executable APK
-  - Install the created APK into your Android Emulator
+#### Flutter
+- Install the Flutter SDK https://docs.flutter.dev/get-started/install
+- Go into the project `todoappflutter` via the console and run `flutter build apk`
+- Install the created APK into your Android Emulator
+#### React Native
+- Have `node` installed
+- Go into the project `ToDoApp` via the console and run `npm install`
+- After that you need to run `npx eas build -p android -e preview`
+  - This command asks you to create an account on the Expo website. You'll need this to build the executable APK
+- Install the created APK into your Android Emulator
  
 ### Run the Tests
 You should have the Android Emulator running with both applications installed before running the tests.
