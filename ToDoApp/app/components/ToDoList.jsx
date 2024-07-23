@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { StyleSheet, View, Dimensions, Animated } from "react-native";
-import { List, Checkbox, useTheme, IconButton, FAB } from "react-native-paper";
+import { Checkbox, useTheme, IconButton, FAB, List } from "react-native-paper";
 import { useDialogStore } from "../state/DialogState";
 import { SwipeListView } from "react-native-swipe-list-view";
 
@@ -11,23 +11,26 @@ const ToDoListItem = ({ title, description, completed }) => {
   const handleToggle = () => {
     setIsCompleted(!isCompleted);
   };
+
   return (
     <Animated.View>
-    <List.Item
-      style={{ backgroundColor: theme.colors.surface }}
-      key={title}
-      title={title}
-      description={description}
-      onPress={handleToggle}
-      right={(props) => (
-        <Checkbox
-          {...props}
-          theme={theme}
-          status={isCompleted ? "checked" : "unchecked"}
-          onPress={handleToggle}
-        />
-      )}
-    />
+      <List.Item
+        accessibilityLabel={title}
+        style={{ backgroundColor: theme.colors.surface }}
+        key={title}
+        title={title}
+        description={description}
+        onPress={handleToggle}
+        right={(props) => (
+          <Checkbox
+            testID={title + "-checkbox"}
+            {...props}
+            theme={theme}
+            status={isCompleted ? "checked" : "unchecked"}
+            onPress={handleToggle}
+          />
+        )}
+      />
     </Animated.View>
   );
 };
@@ -40,23 +43,23 @@ const ToDoList = () => {
 
   const animationIsRunning = useRef(false);
 
-  const onSwipeValueChange = swipeData => {
+  const onSwipeValueChange = (swipeData) => {
     const { key, value } = swipeData;
     if (
-        value < (-Dimensions.get('window').width) &&
-        !animationIsRunning.current
+      value < -Dimensions.get("window").width &&
+      !animationIsRunning.current
     ) {
-        animationIsRunning.current = true;
-        Animated.timing(new Animated.Value(1), {
-            toValue: 0,
-            duration: 2,
-            useNativeDriver: false,
-        }).start(() => {
-            deleteToDo({ name: key })
-            animationIsRunning.current = false;
-        });
+      animationIsRunning.current = true;
+      Animated.timing(new Animated.Value(1), {
+        toValue: 0,
+        duration: 2,
+        useNativeDriver: false,
+      }).start(() => {
+        deleteToDo({ name: key });
+        animationIsRunning.current = false;
+      });
     }
-};
+  };
 
   return (
     <View
@@ -81,16 +84,18 @@ const ToDoList = () => {
         }}
         renderHiddenItem={() => {
           return (
-            <View style={{...styles.hiddenElement, backgroundColor: 'red', height: 'auto'}}>
-              <IconButton
-                icon="delete"
-                iconColor="white"
-              >
-              </IconButton>
+            <View
+              style={{
+                ...styles.hiddenElement,
+                backgroundColor: "red",
+                height: "auto",
+              }}
+            >
+              <IconButton icon="delete" iconColor="white"></IconButton>
             </View>
           );
         }}
-        rightOpenValue={-Dimensions.get('window').width}
+        rightOpenValue={-Dimensions.get("window").width}
         onSwipeValueChange={onSwipeValueChange}
         useNativeDriver={false}
       />
@@ -127,7 +132,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     alignItems: "center",
-  }
+  },
 });
 
 export default ToDoList;

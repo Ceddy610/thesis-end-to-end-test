@@ -20,7 +20,7 @@ class _ToDoListState extends State<ToDoList> {
     _loadToDoItems();
   }
 
-  void addToDoItem({required String task, String description = ''}) {
+  void _addToDoItem({required String task, String description = ''}) {
     setState(
         () => _todoItems.add(ToDoItem(task: task, description: description)));
   }
@@ -52,7 +52,7 @@ class _ToDoListState extends State<ToDoList> {
                     itemBuilder: (context, index) {
                       final item = _todoItems[index].task;
                       return Dismissible(
-                          key: Key(item),
+                          key: ValueKey(item),
                           direction: DismissDirection.endToStart,
                           onDismissed: (direction) => setState(() {
                                 _todoItems.removeAt(index);
@@ -69,7 +69,9 @@ class _ToDoListState extends State<ToDoList> {
                           ),
                           child: CheckboxListTile(
                             title: Text(_todoItems[index].task),
-                            subtitle: Text(_todoItems[index].description),
+                            subtitle: ExcludeSemantics(
+                                excluding: true,
+                                child: Text(_todoItems[index].description)),
                             value: _todoItems[index].isCompleted,
                             onChanged: (bool? value) {
                               setState(() {
@@ -99,17 +101,23 @@ class _ToDoListState extends State<ToDoList> {
                               Padding(
                                   padding: const EdgeInsets.all(16.0),
                                   child: Column(children: <Widget>[
-                                    TextField(
-                                      controller: taskNameController,
-                                      decoration: const InputDecoration(
-                                          label: Text('Task'),
-                                          hintText: 'e.g. Buy milk'),
+                                    Semantics(
+                                      identifier: 'task-name',
+                                      child: TextField(
+                                        controller: taskNameController,
+                                        decoration: const InputDecoration(
+                                            label: Text('Task'),
+                                            hintText: 'e.g. Buy milk'),
+                                      ),
                                     ),
-                                    TextField(
-                                      controller: descriptionController,
-                                      decoration: const InputDecoration(
-                                          label: Text('Description'),
-                                          hintText: 'e.g. 1L of whole milk'),
+                                    Semantics(
+                                      identifier: 'task-description',
+                                      child: TextField(
+                                        controller: descriptionController,
+                                        decoration: const InputDecoration(
+                                            label: Text('Description'),
+                                            hintText: 'e.g. 1L of whole milk'),
+                                      ),
                                     ),
                                   ])),
                               Row(
@@ -122,7 +130,7 @@ class _ToDoListState extends State<ToDoList> {
                                       child: const Text('Cancel')),
                                   TextButton(
                                       onPressed: () {
-                                        addToDoItem(
+                                        _addToDoItem(
                                             task: taskNameController.text,
                                             description:
                                                 descriptionController.text);

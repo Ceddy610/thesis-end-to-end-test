@@ -51,9 +51,20 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       bottomNavigationBar: NavigationBar(
           labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-          destinations: const <Widget>[
-            NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-            NavigationDestination(icon: Icon(Icons.draw), label: 'Drawing'),
+          destinations: <Widget>[
+            NavigationDestination(
+                icon: Semantics(
+                  identifier: 'home',
+                  child: const Icon(Icons.home),
+                ),
+                label: 'Home'),
+            NavigationDestination(
+              icon: Semantics(
+                identifier: 'drawing',
+                child: const Icon(Icons.brush),
+              ),
+              label: 'Drawing',
+            ),
           ],
           selectedIndex: currentIndex,
           onDestinationSelected: (int index) {

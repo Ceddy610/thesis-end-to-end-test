@@ -45,67 +45,30 @@ class DrawingWidget extends StatefulWidget {
 }
 
 class _DrawingWidgetState extends State<DrawingWidget> {
-  DrawnLine? drawnLine;
-  List<DrawnLine?> drawnLines = <DrawnLine?>[];
-  Color selectedColor = Colors.black;
+  DrawnLine? _drawnLine;
+  List<DrawnLine?> _drawnLines = <DrawnLine?>[];
+  final StreamController<List<DrawnLine?>> _linesStreamController = StreamController<List<DrawnLine?>>.broadcast();
+  final StreamController<DrawnLine?> _currentLineStreamController = StreamController<DrawnLine?>.broadcast();
 
-  StreamController<List<DrawnLine?>> linesStreamController = StreamController<List<DrawnLine?>>.broadcast();
-  StreamController<DrawnLine?> currentLineStreamController = StreamController<DrawnLine?>.broadcast();
-
-  void clear() {
-    setState(() {
-      drawnLine = null;
-      drawnLines = [];
-    });
-  }
-
-  void onPanStart(DragStartDetails details) {
+  void _onPanStart(DragStartDetails details) {
     RenderBox box = context.findRenderObject() as RenderBox;
     Offset point = box.globalToLocal(details.globalPosition);
-    drawnLine = DrawnLine(points: [point], color: selectedColor);
+    _drawnLine = DrawnLine(points: [point], color: Colors.black);
   }
 
-  void onPanEnd(DragEndDetails details) {
-    drawnLines = List.from(drawnLines)..add(drawnLine);
+  void _onPanEnd(DragEndDetails details) {
+    _drawnLines = List.from(_drawnLines)..add(_drawnLine);
 
-    linesStreamController.add(drawnLines);
+    _linesStreamController.add(_drawnLines);
   }
 
-  void onPanUpdate(DragUpdateDetails details) {
+  void _onPanUpdate(DragUpdateDetails details) {
     RenderBox box = context.findRenderObject() as RenderBox;
     Offset point = box.globalToLocal(details.globalPosition);
 
-    List<Offset> path = List.from(drawnLine!.points)..add(point);
-    drawnLine = DrawnLine(points: path, color: selectedColor);
-    currentLineStreamController.add(drawnLine);
-  }
-
-  Widget buildToolbar() {
-    return Positioned(
-      top: 40.0,
-      right: 10.0,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          buildClearButton(),
-        ],
-      ),
-    );
-  }
-
-  Widget buildClearButton() {
-    return GestureDetector(
-      onTap: clear,
-      child: const CircleAvatar(
-        backgroundColor: Colors.grey,
-        child: Icon(
-          Icons.clear,
-          size: 20.0,
-          color: Colors.white,
-        ),
-      ),
-    );
+    List<Offset> path = List.from(_drawnLine!.points)..add(point);
+    _drawnLine = DrawnLine(points: path, color: Colors.black);
+    _currentLineStreamController.add(_drawnLine);
   }
 
   @override
@@ -114,18 +77,18 @@ class _DrawingWidgetState extends State<DrawingWidget> {
       backgroundColor: Colors.yellow[50],
       body: Stack(
         children: [
-          buildAllPaths(context),
-          buildCurrentPath(context),
+          _buildAllPaths(context),
+          _buildCurrentPath(context),
         ],
       ),
     );
   }
 
-  GestureDetector buildCurrentPath(BuildContext context) {
+  GestureDetector _buildCurrentPath(BuildContext context) {
     return GestureDetector(
-      onPanStart: onPanStart,
-      onPanUpdate: onPanUpdate,
-      onPanEnd: onPanEnd,
+      onPanStart: _onPanStart,
+      onPanUpdate: _onPanUpdate,
+      onPanEnd: _onPanEnd,
       child: RepaintBoundary(
         child: Container(
           width: MediaQuery.of(context).size.width,
@@ -134,11 +97,11 @@ class _DrawingWidgetState extends State<DrawingWidget> {
           color: Colors.transparent,
           alignment: Alignment.topLeft,
           child: StreamBuilder<DrawnLine?>(
-            stream: currentLineStreamController.stream,
+            stream: _currentLineStreamController.stream,
             builder: (context, snapshot) {
               return CustomPaint(
                 painter: ToDoPainter(
-                  drawnLines: [drawnLine],
+                  drawnLines: [_drawnLine],
                 ),
               );
             },
@@ -148,7 +111,7 @@ class _DrawingWidgetState extends State<DrawingWidget> {
     );
   }
 
-  Widget buildAllPaths(BuildContext context) {
+  RepaintBoundary _buildAllPaths(BuildContext context) {
     return RepaintBoundary(
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -157,11 +120,11 @@ class _DrawingWidgetState extends State<DrawingWidget> {
         padding: const EdgeInsets.all(4.0),
         alignment: Alignment.topLeft,
         child: StreamBuilder<List<DrawnLine?>>(
-          stream: linesStreamController.stream,
+          stream: _linesStreamController.stream,
           builder: (context, snapshot) {
             return CustomPaint(
               painter: ToDoPainter(
-                drawnLines: drawnLines,
+                drawnLines: _drawnLines,
               ),
             );
           },

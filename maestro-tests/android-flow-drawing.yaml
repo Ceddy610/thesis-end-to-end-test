@@ -31,10 +31,11 @@ appId: ${APP_ID}
 - takeScreenshot: DrawingPageActual
 - runScript:
     label: "Compare Images"
-    file: scripts/exec.js
+    file: scripts/image-compare.js
     env:
-      command: 'sh ../image-compare.sh'
-- evalScript: ${console.log(output.exec.stdout)}
+      baseline: "DrawingPageExpected.png"
+      current: "DrawingPageActual.png"
+- evalScript: ${console.log(output.diff)}
 - assertTrue:
     label: "Images are similar"
-    condition: ${output.exec.exitCode === 0}
+    condition: ${output.diff * 100 <= 30}

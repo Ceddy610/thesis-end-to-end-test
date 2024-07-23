@@ -1,17 +1,35 @@
 appId: ${APP_ID}
 ---
 - launchApp
-- tapOn:
+- runFlow:
     label: "Check first todo"
-    text: "Some-todo-1.*"
-- swipe:
-    start: "75%,10%"
-    end: "31%,10%"
-    duration: 479
-- tapOn: "Add a task"
-- tapOn: "Task"
-- inputText: "Task 1"
-- tapOn: "Description"
-- inputText: "Description 1"
-- tapOn: "Add"
-- assertVisible: "Task 1.*"
+    commands:
+        - tapOn:
+            label: "Click on first todo"
+            text: "Some-todo-1"
+        - assertVisible:
+            label: "Is first todo checked"
+            text: "Some-todo-1"
+            checked: true
+- runFlow:
+    label: "Remove first todo"
+    commands:
+        - swipe:
+            label: "Swipe left on first todo"
+            from:
+                text: "Some-todo-1"
+            direction: LEFT
+            duration: 479
+        - assertNotVisible:
+            label: "Is first todo removed"
+            text: "Some-todo-1"
+- runFlow:
+    label: "Add a new task"
+    commands:
+        - tapOn: "Add a task"
+        - tapOn: "Task"
+        - inputText: "Task 1"
+        - tapOn: "Description"
+        - inputText: "Description 1"
+        - tapOn: "Add"
+        - assertVisible: "Task 1"

@@ -17,12 +17,12 @@ export default function ToDoDialog({ visible, onDismiss }) {
       <Dialog visible={visible} onDismiss={onDismiss}>
         <Dialog.Title>Add a new task</Dialog.Title>
         <Dialog.Content>
-          <TextInput label="Task name" onChangeText={setTaskName} />
-          <TextInput label="Task description" onChangeText={setTaskDescription} />
+          <TextInput testID="task-name" label="Task" onChangeText={setTaskName} />
+          <TextInput testID="task-description" label="Description" onChangeText={setTaskDescription} />
         </Dialog.Content>
         <Dialog.Actions>
           <Button onPress={onDismiss}>Cancel</Button>
-          <Button onPress={handleTaskNameChange}>Confirm</Button>
+          <Button onPress={handleTaskNameChange}>Add</Button>
         </Dialog.Actions>
       </Dialog>
       </Portal>

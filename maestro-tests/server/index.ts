@@ -1,8 +1,10 @@
-import process from 'child_process';
-import express from 'express';
-import { Buffer } from 'node:buffer';
+import process from "child_process";
+import express from "express";
+import { Buffer } from "node:buffer";
+import * as resemble from "resemblejs";
+import fs from "node:fs";
 
-const host = '127.0.0.1';
+const host = "127.0.0.1";
 const port = 4567;
 
 const app = express();
@@ -13,49 +15,39 @@ app.listen(port, host, () => {
   console.log(`Listening on ${host}:${port}`);
 });
 
-app.post('/exec', (req, res) => {
-  const args = req.body.args;
-  if (!isStringArray(args)) {
-    res.status(400).send({
-      error: 'invalid args',
-    });
-    return;
-  }
+app.post("/", (req, res) => {
+  const pictureBaseline = req.body.baseline;
+  const pictureCurrent = req.body.current;
 
-  const proc = process.spawn(args[0], args.slice(1), {
-    shell: true,
-  });
+  console.log(`Comparing ${pictureBaseline} with ${pictureCurrent}`);
 
-  const stdout: Buffer[] = [];
-  const stderr: Buffer[] = [];
-
-  proc.stdout.on('data', (data) => stdout.push(data));
-  proc.stderr.on('data', (data) => stderr.push(data));
-
-  proc.on('error', (err) => {
-    res.status(500).send({
-      exitCode: 127,
-      stdout: '',
-      stderr: err,
-    });
-  });
-
-  proc.on('close', (exitCode) => {
-    if (!res.headersSent) {
-      const responseStatus = exitCode === 0 ? 200 : 500;
-      res.status(responseStatus).send({
-        exitCode,
-        stdout: Buffer.concat(stdout).toString('utf-8'),
-        stderr: Buffer.concat(stderr).toString('utf-8'),
+  resemble
+    .default(`../${pictureBaseline}`)
+    .compareTo(`../${pictureCurrent}`)
+    .ignoreAntialiasing()
+    .outputSettings({
+      boundingBox: {
+        left: 10,
+        top:90,
+        right: 1015,
+        bottom: 1900,
+      },
+    })
+    .onComplete((data) => {
+      const buffer = data?.getBuffer?.(true);
+      res.status(200).send({
+        diff: data.misMatchPercentage,
       });
-    }
-  });
+      console.log(data.misMatchPercentage);
+
+      if(!buffer) {
+        return;
+      }
+
+      fs.writeFile(`../${pictureCurrent}-diff.png`, buffer, (err) => {
+        if (err) {
+          console.error(err);
+        }
+      });
+    });
 });
-
-function isStringArray(v: string[] | unknown): v is string[] {
-  if (!Array.isArray(v)) {
-    return false;
-  }
-
-  return v.every((i) => typeof i === 'string');
-}

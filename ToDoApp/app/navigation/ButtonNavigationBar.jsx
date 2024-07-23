@@ -17,7 +17,7 @@ const ToDoRoute = () => {
   )
 };
 
-const AlbumsRoute = () => <Drawing />;
+const DrawingRoute = () => <Drawing />;
 
 export default () => {
   const [index, setIndex] = useState(0);
@@ -28,12 +28,12 @@ export default () => {
       focusedIcon: "home",
       unfocusedIcon: "home",
     },
-    { key: "drawing", title: "Drawing", focusedIcon: "draw" },
+    { key: "drawing", title: "Drawing", focusedIcon: "draw", testID: "drawing" },
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
     todo: ToDoRoute,
-    drawing: AlbumsRoute,
+    drawing: DrawingRoute,
   });
 
   return (

@@ -48,6 +48,10 @@ export default () => {
                 strokeWidth={5}
                 style="stroke"
                 color={"black"}
+                strokeMiter={10}
+                stroke={{
+                  precision: 1,
+                }}
               />
             ))}
           </Canvas>
