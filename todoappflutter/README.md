@@ -1,6 +1,6 @@
 # todoappflutter
 
-A new Flutter project.
+This is a project for testing purposes.
 
 ## Getting Started
 
