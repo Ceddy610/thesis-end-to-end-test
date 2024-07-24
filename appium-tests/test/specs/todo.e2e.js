@@ -2,7 +2,6 @@ const { expect, driver, $ } = require('@wdio/globals')
 
 describe('Todo screen', () => {
     it('checks a todo as done', async () => {
-        await driver.pause(100000);
         let firstTodo = await $(`~Some-todo-1`);
         await firstTodo.click();
 

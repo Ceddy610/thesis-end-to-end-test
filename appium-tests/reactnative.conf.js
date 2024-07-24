@@ -54,7 +54,7 @@ exports.config = {
         platformName: 'Android',
         'appium:deviceName': 'Android GoogleAPI Emulator',
         'appium:automationName': 'UiAutomator2',
-        'appium:appPackage': 'com.ceddy610.ToDoApp',
+        'appium:appPackage': 'com.exmaple.ToDoApp',
         'appium:appActivity': '.MainActivity',
     }],
 
