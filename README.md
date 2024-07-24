@@ -26,6 +26,7 @@ You can build both applications from scratch by using the corresponding CLIs.
 - Go into the project `ToDoApp` via the console and run `npm install`
 - After that you need to run `npx eas build -p android -e preview`
   - This command asks you to create an account on the Expo website. You'll need this to build the executable APK
+  - There's also a prebuilt APK available in the project
 - Install the created APK into your Android Emulator
  
 ### Run the Tests
