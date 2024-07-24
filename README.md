@@ -8,8 +8,8 @@ work that enables the creation of tests equally applicable to both Flutter and
 React Native. To this end, the test frameworks Appium and Maestro are eval-
 uated and assessed based on defined criteria and a subsequent evaluation
 matrix. The findings of the thesis indicate that both tools exhibit specific
-strengths and weaknesses, but are suitable for end-to-end testing of cross-
-platform applications in the context of a migration
+strengths and weaknesses, but are suitable for end-to-end testing of cross-platform
+applications in the context of a migration
 
 
 ## How to use
