@@ -33,7 +33,7 @@ You should have the Android Emulator running with both applications installed be
 
 #### Maestro
 
-- Install the `maestro`-CLI via `curl -Ls "https://get.maestro.mobile.dev" | bash` (only on MacOS or Linux. For Windows check out the documentation https://maestro.mobile.dev/getting-started/installing-maestro/windows)
+- Install the `maestro`-CLI via `curl -Ls "https://get.maestro.mobile.dev" | bash` (only on MacOS or Linux. For Windows check out the documentation: https://maestro.mobile.dev/getting-started/installing-maestro/windows
 - Go into the `maestro-tests` folder via the console
 - Then into the `server` folder and run `npm install`
 - Now you can go back into the `maestro-tests` folder and run the tests via `sh run-test.sh`
